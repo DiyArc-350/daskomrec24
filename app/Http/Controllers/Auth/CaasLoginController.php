@@ -32,18 +32,41 @@ class CaasLoginController extends Controller
         return redirect()->back()->with(['error' => 'NIM / Password Salah']); // disesuaikan sama nama routenye
     }
 
+    public function changePass(){
+        return view('caas.changepass', ['title' => 'Change Password']);
+    }
 
-    public function changePass(Request $request,$id)
+    public function changePassCheck(Request $request)
     {
-        $this->validate($request, [
-            'password'  => 'required|min:8|string',
-            'confirmPassword'  => 'required|same:password',
-        ]);
-        DataCaas::where('id', $id)->update([
-            'password' => Hash::make($request->password),
-        ]);
+        $id = Auth::guard('caas')->user()->id;
+        $caas = Datacaas::find($id);
+        
+        // Validasi
+        $messages = [
+            'old_password' => 'Old password is incorrect.',
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        ];
+        $rules = [
+            'old_password' => 'required|string',
+            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+        ];
+        $this->validate($request, $rules, $messages);
+        
+        // Verifikasi password lama
+        if (!Hash::check($request->old_password, $caas->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'Old password is incorrect.']);
+        }
+
+        // Update password baru
+        $caas->password = Hash::make($request->password);
+        $caas->save();
+
+        // Logout dengan aman
         Auth::guard('caas')->logout();
-        return redirect()->route('caas.login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with(['changed' => 'Password successfully changed']);
     }
 
     public function logout()
@@ -51,6 +74,4 @@ class CaasLoginController extends Controller
         Auth::guard('caas')->logout();
         return redirect(route('caas.login'));
     }
-
-
 }
