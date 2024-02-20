@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* jangan lupa
+npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch */
+
 @font-face {
     font-family: "Ringbearer";
     src: url("/assets/caas/font/RINGM___.TTF");

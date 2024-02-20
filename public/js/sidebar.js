@@ -1,0 +1,1 @@
+(()=>{var e=document.querySelector(".sidebar"),o=document.querySelector(".profile .boxsidebar"),t=document.querySelector(".profile");document.querySelector("#btn").addEventListener("click",(function(){console.log("Button clicked"),e.classList.toggle("open"),o.classList.toggle("open"),t.classList.toggle("open")}))})();
