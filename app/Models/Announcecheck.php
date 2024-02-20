@@ -20,7 +20,6 @@ class Announcecheck extends Model
         'isMessageActive',
         'isPlotActive',
         'isRoleActive',
-        'link',
         'created_at',
         'updated_at'
     ];

@@ -12,7 +12,7 @@ class Assistantcontact extends Model
     protected $fillable = [
         'name',
         'photo',
-        'ascod',
+        'ascode',
         'nohp',
         'instagram',
         'idline',
