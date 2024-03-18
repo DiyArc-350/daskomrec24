@@ -41,7 +41,6 @@
         </form>
     </div> 
 </div>
-<!-- changepass end -->
     @include('caas.partials.footer')
 </body>
 </html>
