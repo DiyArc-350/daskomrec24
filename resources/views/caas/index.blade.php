@@ -91,7 +91,7 @@
         <div class="absolute top-0 left-0 max-w-[200px] mx-auto right-0 text-justify -mt-[75px] z-10">
             <div class="deskripsi text-tridary text-[13px] font-vinque mb-3">
                 <p class="mb-2">
-                    Nama: {{ auth()->guard('caas')->user()->name }}
+                    Nama: {{ ucwords(strtolower(auth()->guard('caas')->user()->name)) }}
                 </p>
                 <p class="mb-2">
                     NIM: {{ auth()->guard('caas')->user()->nim }}
