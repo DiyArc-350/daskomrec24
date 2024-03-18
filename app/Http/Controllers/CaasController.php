@@ -75,6 +75,12 @@ class CaasController extends Controller
     {
         $selectedShift = Shift::find($request->id);
         $quota = $selectedShift->quota - 1;
+
+        $plot = Plotting::where('caas_id', Auth::guard('caas')->user()->id)->first();
+        if ($plot) {
+            return redirect()->route('caas.fix.schedule');
+        }
+
         Plotting::create([
             'shift_id' => $selectedShift->id,
             'caas_id' => Auth::guard('caas')->user()->id,
@@ -133,6 +139,11 @@ class CaasController extends Controller
     {
         $selectedRole = Roles::find($request->id);
         $quota = $selectedRole->quota - 1;
+
+        if (Auth::guard('caas')->user()->role->roles_id == $request->id) {
+            return redirect()->route('caas.fix.role');
+        }
+        
         Roles::where('id', $request->id)->update([
             'quota' => $quota
         ]);

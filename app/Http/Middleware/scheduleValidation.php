@@ -17,15 +17,19 @@ class scheduleValidation
     public function handle(Request $request, Closure $next)
     {
         $page = $request->route()->getName();
-
-        if (auth()->guard('caas')->user()->status->isPass && auth()->guard('caas')->user()->announcecheck()->isPlotActive) {
+        
+        if (auth()->guard('caas')->user()->status->isPass) {
+            if(!boolval(auth()->guard('caas')->user()->announcecheck()->isPlotActive)&& !boolval(auth()->guard('caas')->user()->plots)){
+                return redirect()->route('caas.dashboard');
+            }
             if ($page == 'caas.schedule' && boolval(auth()->guard('caas')->user()->plots) == 1) {
                 return redirect()->route('caas.fix.schedule');
-            } 
-            if($page == 'caas.fix.schedule' && !boolval(auth()->guard('caas')->user()->plots)) {
+            }
+            if($page == 'caas.fix.schedule' && !boolval(auth()->guard('caas')->user()->plots)){
                 return redirect()->route('caas.schedule');
             }
-        } else {
+        }
+        else {
             return redirect()->route('caas.dashboard');
         }
         return $next($request);
