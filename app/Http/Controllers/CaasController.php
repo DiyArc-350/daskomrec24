@@ -60,10 +60,6 @@ class CaasController extends Controller
     {
         $shift = Shift::where('id', $request->id)->first();
         $day = Carbon::parse($shift->day)->locale('id')->translatedFormat('l d M');
-        //kalo ada yg iseng masuk lewat link
-        if ($shift->quota <= 0 || !Auth::guard('caas')->user()->announcecheck()->isPlotActive) {
-            return redirect()->route('caas.schedule');
-        }
         $data = [
             'title' => "Konfirmasi Jadwal",
             'schedule' => $shift,
@@ -74,11 +70,10 @@ class CaasController extends Controller
     public function saveSchedule(Request $request)
     {
         $selectedShift = Shift::find($request->id);
-        $quota = $selectedShift->quota - 1;
-
-        $plot = Plotting::where('caas_id', Auth::guard('caas')->user()->id)->first();
-        if ($plot) {
-            return redirect()->route('caas.fix.schedule');
+        $quota = $selectedShift->quota - 1; 
+        //biar kelempar kalo udh full
+        if ($quota < 0) {
+            return redirect()->route('caas.schedule')->with('quota', 'Quota jadwal sudah penuh!!');
         }
 
         Plotting::create([
@@ -139,9 +134,9 @@ class CaasController extends Controller
     {
         $selectedRole = Roles::find($request->id);
         $quota = $selectedRole->quota - 1;
-
-        if (Auth::guard('caas')->user()->role->roles_id == $request->id) {
-            return redirect()->route('caas.fix.role');
+        //biar kelempar kalo udh full
+        if($quota < 0) {
+            return redirect()->route('caas.role')->with('error', 'Quota role sudah penuh!!');
         }
         
         Roles::where('id', $request->id)->update([

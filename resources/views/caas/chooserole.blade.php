@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-    <link rel="icon" type="DLOR" href="{{ asset('/assets/caas/homepage/LogoDlor24.jpg') }}" />
+    <link rel="shortcut icon" href="{{ asset('/assets/admin/images/favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" />
@@ -20,6 +20,13 @@
 
  <!-- assistantcontact start -->
 <div class="container mx-auto max-w-4xl py-1 mb-2 bg-center">
+    @if(session('quota'))
+       <!-- Alert Danger  -->
+       <div class="flex justify-between text-fivedary shadow-inner rounded p-2 bg-red-500">
+           <p class="text-center font-vinque mx-auto">{{ session('quota') }}</p>
+           <strong class="text-md align-center cursor-pointer alert-del">&times;</strong>
+       </div>
+   @endif
     <div class="flex flex-row justify-center mt-2 mr-3 ml-3">
         <div class="text-title items-center text-center m-1">
             <h1 class="font-bold text-[30px] font-ringbearer text-sixdary">Choose Role</h1>
@@ -65,5 +72,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="{{ asset('js/sliderassistant.js') }}"></script>
 <script src="{{ asset('js/sidebar.js') }}"></script>
+<script>
+    var alert_del = document.querySelectorAll('.alert-del');
+  alert_del.forEach((x) =>
+    x.addEventListener('click', function () {
+      x.parentElement.classList.add('hidden');
+    })
+  );
+</script>
 </body>
 </html>

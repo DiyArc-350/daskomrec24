@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
-    <link rel="icon" type="DLOR" href="{{ asset('/assets/caas/homepage/LogoDlor24.jpg') }}" />
+    <link rel="shortcut icon" href="{{ asset('/assets/admin/images/favicon.ico') }}">
     <title>{{ $title }}</title>
 </head>
 <body class="bg-play-dungeon bg-cover bg-fixed bg-no-repeat bg-center cursor-sword overflow-y-auto">
@@ -17,7 +17,14 @@
 
 
  <!-- tabel jadwal start -->
-    <div class="container relative max-w-3xl mx-auto py-2"> 
+ <div class="container relative max-w-3xl mx-auto py-2"> 
+        @if(session('quota'))
+            <!-- Alert Danger  -->
+            <div class="flex justify-between text-fivedary shadow-inner rounded p-2 bg-red-500">
+                <p class="text-center font-vinque mx-auto">{{ session('quota') }}</p>
+                <strong class="text-md align-center cursor-pointer alert-del">&times;</strong>
+            </div>
+        @endif
         <div class="judul-tabel text-center mt-7 mb-5">
             <h1 class="text-white text-[32px] font-bold font-ringbearer">Select a Schedule</h1>
         </div>
@@ -71,5 +78,13 @@
 
 <!-- script sidebar -->
 <script src="{{ asset('js/sidebar.js') }}"></script>
+<script>
+    var alert_del = document.querySelectorAll('.alert-del');
+  alert_del.forEach((x) =>
+    x.addEventListener('click', function () {
+      x.parentElement.classList.add('hidden');
+    })
+  );
+</script>
 </body>
 </html>

@@ -24,16 +24,20 @@
     
     <div class="text-announce absolute top-[20px] left-0 right-0 text-center mt-[85px] z-10"> 
         <h1 class="text-announce-title text-secondary text-[22px] font-ringbearer mb-[18px]">Announcement</h1>
-        @if (auth()->guard('caas')->user()->status->isPass == 1 && auth()->guard('caas')->user()->announcecheck()->isMessageActive == 1 )
+        @if (auth()->guard('caas')->user()->status->isPass == 1 && auth()->guard('caas')->user()->announcecheck()->isMessageActive == 1 && auth()->guard('caas')->user()->stages()->id == auth()->guard('caas')->user()->status->stages->id)
         <p class="announcement text-secondary text-[12px] text-justify max-w-[250px] mx-auto font-vinque">
+            Selamat <b>{{ ucwords(strtolower(auth()->guard('caas')->user()->name)) }}</b>!!<br>
             {!! $msg->pass_msg !!}
         </p>       
-        @elseif (auth()->guard('caas')->user()->status->isPass == 0)
+        @elseif (auth()->guard('caas')->user()->status->isPass == 0 && auth()->guard('caas')->user()->stages()->id != auth()->guard('caas')->user()->status->stages->id )
         <p class="announcement text-secondary text-[12px] text-justify max-w-[250px] mx-auto font-vinque">
-            {!! $msg->failed_msg !!}
+            <b>{{ ucwords(strtolower(auth()->guard('caas')->user()->name)) }}</b>,<br>
+            kamu dinyatakan tidak lolos pada <b>Tahap {{ auth()->guard('caas')->user()->status->stages->stagesName }}</b>. Terimakasih telah mengikuti rangkaian recruitment dari Daskom Laboratory. <br><br>
+            "Jangan jadikan kegagalan sebagai alasan untuk menyerah. Jadikanlah sebagai motivasi untuk terus berusaha." - R.A. Kartini<br><br>
+            Tetap Semangat!!
         </p>
-        @elseif (auth()->guard('caas')->user()->announcecheck()->isMessageActive == 0 && auth()->guard('caas')->user()->status->isPass == 1)
-         <p class="announcement text-secondary text-[12px] text-center max-w-[250px] mx-auto font-vinque">
+        @else
+        <p class="announcement text-secondary text-[12px] text-center max-w-[250px] mx-auto font-vinque">
             <span class="text-[#4322fb] ">Tahap {{ auth()->guard('caas')->user()->status->stages->stagesName }}</span> sedang berlangsung.<br> Semangat dan pantau terus informasi di OA Line Recruitment Daskom Laboratory untuk instruksi berikutnya.
         </p>
         @endif
