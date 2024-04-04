@@ -10,4 +10,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-resources/views/admin/caasList.blade.php
+public/assets/caas
+public/assets/images

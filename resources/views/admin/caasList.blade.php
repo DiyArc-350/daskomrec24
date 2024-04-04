@@ -250,7 +250,7 @@
                     <div class="modal-footer">
                     <div class="row float-end">
                         <div class="">
-                            <button type="submit" class="btn btn-secondary">Update</button>
+                            <button type="submit" class="btn btn-danger">Update</button>
                         </div>
                     </div>
                     </div>
@@ -308,17 +308,15 @@
                                 <input class="form-control" type="text" readonly value="{{ $cm->class }}" name="class" id="class">
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label class="col-md-2 col-form-label" name='roles_id'>Role</label>
-                            <div class="col-md-10">
-                                <select class="form-select" disabled>
-                                    @foreach ( $roles as $r)
-                                    <option value="{{ $r->id }}" {{ $r->id == $cm->role->roles_id ? 'selected' : '' }}>{{ $r->roleName }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                         <div class="p-4 bg-warning bg-soft">
+                            @if (boolval($cm->plots))
+                                <div class="mb-3 row">
+                                    <label class="col-md-2 col-form-label">Jadwal</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" readonly value="{{ $cm->plots->shifts->shift_name. ' - '. $cm->plots->shifts->day }}" name="isRoleActive" id="isRoleActive">
+                                    </div>
+                                </div>
+                            @endif
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label" name='stages_id'>Tahap</label>
                                 <div class="col-md-10">
@@ -329,7 +327,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class=" row">
+                            <div class="row">
                                 <label class="col-md-2 col-form-label">Status</label>
                                 <div class="col-md-10">
                                     <select class="form-select" disabled>
@@ -338,6 +336,7 @@
                                     </select>
                                 </div>
                             </div>
+                            
     
                         </div>
                         

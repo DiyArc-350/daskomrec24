@@ -42,7 +42,7 @@ class Datacaas extends Authenticatable
 
     public function stages()
     {
-        return Stage::where('is_Active', 1)->first();
+        return Stage::where('isActive', 1)->first();
     }
 
     public function announcecheck()

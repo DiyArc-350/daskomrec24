@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Carbon\Carbon;
 use App\Models\Datacaas;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 
 
 class CaasLoginController extends Controller
@@ -32,6 +33,7 @@ class CaasLoginController extends Controller
             'nim' => $request->nim,
             'password' => $request->password
         ], true)) {
+            Datacaas::where('nim', $request->nim)->update(['updated_at' => Carbon::now()]);
             return redirect()->route('caas.dashboard'); // disesuaikan sama nama route
         }
         return redirect()->back()->withErrors(['nim' => 'NIM atau Password Salah', 'password' => 'NIM atau Password Salah']); // disesuaikan sama nama routenye        

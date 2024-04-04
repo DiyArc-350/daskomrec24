@@ -7,6 +7,7 @@ use App\Models\Plotting;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePlottingRequest;
 use App\Http\Requests\UpdatePlottingRequest;
+use App\Models\Datacaas;
 
 class PlottingController extends Controller
 {
@@ -16,12 +17,14 @@ class PlottingController extends Controller
         $totalShift = count($shifts);
         $plots = Plotting::all();
         $totalPlot = count($plots);
+        $notPlotted = Datacaas::leftJoin('statuses', 'statuses.caas_id', '=', 'datacaas.id')->where('statuses.isPass', 1)->doesntHave('plots')->get();
         $data = [
             'title' => 'Plottingan',
             'shifts' => $shifts,
             'plots' => $plots,
             'totalShift' => $totalShift,
-            'totalPlot' => $totalPlot
+            'totalPlot' => $totalPlot,
+            'notPlotted' => $notPlotted
         ];
         return view('admin.plottingan', $data);
     }

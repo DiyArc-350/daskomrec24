@@ -36,28 +36,26 @@
                         <div class="col-lg-12 align-self-center">
                             <div class="text-lg-center mt-4 mt-lg-0">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <div>
                                             <p class="text-muted text-truncate mb-2">Total Jadwal</p>
                                             <h5 class="mb-0">{{ $totalShift }}</h5>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <div>
                                             <p class="text-muted text-truncate mb-2">Total Yang Udah Pilih Jadwal</p>
                                             <h5 class="mb-0">{{ $totalPlot }}</h5>
                                         </div>
                                     </div>
+                                    <div class="col-2 justify-end">
+                                        <div>
+                                            <button class="btn btn-outline-warning w-md bg-gradient" data-bs-toggle="modal"data-bs-target=".notPlotted-detailModal">Not Plotted</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="col-lg-6 align-self-end">
-                            <div class="text-lg-end mt-4 mt-lg-0">
-                                <a href="" class="btn btn-outline-success btn-block mx-2">Export to excel</a>
-                            </div>
-                        </div> --}}
-
                     </div>
                     <!-- end row -->
                 </div>
@@ -113,6 +111,42 @@
 
 </div> <!-- container-fluid -->
 
+
+<!-- table Modal -->
+ <div class="modal fade notPlotted-detailModal" tabindex="-1" role="dialog" aria-labelledby="notPlotted-detailModal"
+     aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"  role="document">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="notPlotted-detailModal">Blm Plh Jdwl</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                <div class="table-responsive">                   
+                    <table id="datatable" class="table table-striped table-bordered dt-responsive text-center nowrap w-100">
+                        <thead>
+                            <tr class="">
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Last Logged in</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($notPlotted as $c)
+                            <tr>    
+                                <td>{{ $c->nim }} </td>
+                                <td>{{ $c->name }}</td>
+                                <td>{{ $c->updated_at }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ <!-- end modal -->
 
 @endsection
 
